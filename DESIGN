@@ -1,0 +1,13 @@
+Ahnaf Kazi
+Battleship
+Will be based on named pipes and networking.
+Server will handle storage and calculation of boards after ships are placed.
+Clients will be able to input a coordinate into the terminal in order to select the space to launch at. (Possibly able to select with readline arrows)
+The server will tell the client if it hit.
+The server will store the board, but will still send a string with a version of the boards for the client side players to see.
+A semaphore will make sure there are only 2 clients connected.
+
+Expected Completion:
+Board initialization and modification: 1/7
+Server Client handshake: 1/11
+Networking: 1/14
