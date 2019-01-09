@@ -18,6 +18,17 @@ int hit(char board[8][8], int x, int y){
   return -1;
 }
 
+int place(char board[][], char x, char y, char length, char rot){
+  if(rot == 0){
+    if(y + length > 8){
+      return -1;
+    }
+    for(int l = 0; l < length; l++){
+      board[x][y+l] == 1;
+    }
+  }
+}
+
 int main(){
   
   char board[8][8];
