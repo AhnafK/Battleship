@@ -74,7 +74,4 @@ int main(){
   place(red, 2, 3, 4, 0);
   place(red, 0, 4, 4, 1);
   display(red, 1);
-  printf("\n");
-  display(blue, 0);
-  
 }
