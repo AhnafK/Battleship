@@ -10,10 +10,15 @@ int build(char board[8][8]){
   return 0;
 }
 
-int place(char board[8][8], char x, char y, char length, char rot){
+int place(char board[8][8], char x, char y, char length, int rot){
   if(rot == 0){
     if(y + length > 8){
       return -1;
+    }
+    for(int l = 0; l < length; l++){
+      if(board[x][y+l]){
+	return -1;
+      }
     }
     for(int l = 0; l < length; l++){
       board[x][y+l] = 1;
@@ -23,6 +28,11 @@ int place(char board[8][8], char x, char y, char length, char rot){
   if(rot == 1){
     if(x + length > 8){
       return -1;
+    }
+    for(int l = 0; l < length; l++){
+      if(board[x+l][y]){
+	return -1;
+      }
     }
     for(int l = 0; l < length; l++){
       board[x+l][y] = 1;
@@ -63,6 +73,26 @@ int display(char board[8][8], char op){
     }
     printf("\n");
   }
+  printf("\n");
+}
+
+int initialize(char board[8][8]){
+  int x;
+  int y;
+  int rot;
+  display(board,1);
+  printf("Place Battleship(4): ");
+  scanf("%d %d %d", &x, &y, &rot);
+  place(board, x,y,4,rot);
+  display(board,1);
+  printf("Place Destroyer(3): ");
+  display(board,1);
+  printf("Place Submarine(3): ");
+  display(board,1);
+  printf("Place Patrol Boat(2): ");
+  display(board,1);
+  printf("Place Carrier(5): ");
+  return 0;
 }
 
 int main(){
@@ -72,9 +102,8 @@ int main(){
   build(blue);
   build(red);
   place(red, 2, 3, 4, 0);
-  place(red, 0, 4, 4, 1);
+  place(red, 0, 4, 4, 0);
   display(red, 1);
-  printf("\n");
-  display(blue, 0);
+  display(red, 0);
   
 }

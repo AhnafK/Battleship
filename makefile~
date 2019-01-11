@@ -1,0 +1,13 @@
+all: testboard.c
+	gcc testboard.c battleship
+
+run: battleship
+	./battleship
+
+clean: battleship
+	rm battleship
+
+debug: battleship
+	rm battleship
+	gcc -g testboard.c battleship
+	gdb ./battleship
