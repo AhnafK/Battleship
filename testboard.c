@@ -45,6 +45,9 @@ int hit(char board[8][8], int x, int y){
   if(board[x][y] == 1){
     printf("%d HIT!\n", board[x][y]);
     board[x][y] = 2;
+    if(board[x-1][y] != 1 && board[x+1][y] != 1 && board[x][y-1] != 1 && board[x][y+1] != 1){
+      printf("Ship sunk!");
+    }
     return 1;
   }
   else{
@@ -55,7 +58,7 @@ int hit(char board[8][8], int x, int y){
 }
 
 int display(char board[8][8], char op){
-  printf("  0 1 2 3 4 5 6 7\n");
+  printf("\n  0 1 2 3 4 5 6 7\n");
   for(int y = 0; y < 8; y++){
     printf("%d ", y);
     for(int x = 0; x < 8; x++){
@@ -80,30 +83,40 @@ int initialize(char board[8][8]){
   int x;
   int y;
   int rot;
-  display(board,1);
-  printf("Place Battleship(4): ");
-  scanf("%d %d %d", &x, &y, &rot);
-  place(board, x,y,4,rot);
-  display(board,1);
-  printf("Place Destroyer(3): ");
-  display(board,1);
-  printf("Place Submarine(3): ");
-  display(board,1);
-  printf("Place Patrol Boat(2): ");
-  display(board,1);
-  printf("Place Carrier(5): ");
+  char* boats[5] = {"Battleship", "Destroyer", "Submarine", "Patrol Boat", "Carrier"};
+  int sizes[5] = {4,3,3,2,5};
+  for(int s = 0; s < 5; s++){
+    display(board, 1);
+    printf("Place %s(%d): ",boats[s],sizes[s]);
+    scanf("%d %d %d", &x, &y, &rot);
+    int good = place(board, x,y,sizes[s],rot);
+    while(good == -1){
+      printf("Place again!\n");
+      display(board, 1);
+      printf("Place %s(%d): ",boats[s],sizes[s]);
+      scanf("%d %d %d", &x, &y, &rot);
+      good = place(board, x,y,sizes[s],rot);
+    }
+    good = 0;
+  }
   return 0;
 }
 
 int main(){
-  
+  int redscore = 17;
+  int bluescore = 17;
   char red[8][8];
   char blue[8][8];
   build(blue);
   build(red);
-  place(red, 2, 3, 4, 0);
-  place(red, 0, 4, 4, 0);
+  initialize(red);
   display(red, 1);
-  display(red, 0);
-  
+  int tarx;
+  int tary;
+  while(!(redscore && bluescore)){
+    display(red, 0);
+    printf("Select your target: ");
+    scanf("%d %d", &tarx, &tary);
+    hit(red, tarx, tary);
+  }
 }
