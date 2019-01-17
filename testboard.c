@@ -77,14 +77,17 @@ int place(char board[8][8], char x, char y, int boat, int rot){
   }
 }
 
-int hit(char board[8][8], int x, int y, int score[]){
+int hit(char board[8][8], int x, int y, int score[5]){
   char* boats[5] = {"Battleship", "Destroyer", "Submarine", "Patrol Boat", "Carrier"};
   if(board[x][y] == 1 || board[x][y] > 3){
     printf("HIT!\n");
-    board[x][y] = 2;
+    printf("%d\n",score[board[x][y]-4]);
+    score[board[x][y]-4]--;
+    printf("%d\n",score[board[x][y]-4]);
     if(score[board[x][y]-4]<1){
       printf("YOU SUNK THEIR %s!!!\n", boats[board[x][y]-4]);
     }
+    board[x][y] = 2;
     return 1;
   }
   else{
@@ -108,7 +111,14 @@ int display(char board[8][8], char op){
     printf("\e[0m%d ", y);
     for(int x = 0; x < 8; x++){
       if(op){
-	printf("%d ", board[x][y]);
+	int value;
+	if(board[x][y]>3){
+	  value = 1;
+	}
+	else{
+	  value = board[x][y];
+	}
+	printf("%s%d ", standards[value], board[x][y]);
       }
       else{
 	if(board[x][y] == 1||board[x][y] > 3){
@@ -177,6 +187,8 @@ int rinit(char board[8][8]){
 int main(){
   int bluescore[5] = {4,3,3,2,5};
   int  redscore[5] = {4,3,3,2,5};
+  int redhp = 17;
+  int bluehp = 17;
   char red[8][8];
   char blue[8][8];
   build(blue);
@@ -188,13 +200,20 @@ int main(){
   rinit(blue);
   display(blue, 1);
   system("clear");
-  display(blue, 0);
+  display(blue, 1);
   printf("Select your target: ");
   scanf("%d %d", &tarx, &tary);
-  while(redscore && bluescore){
+  while(redhp && bluehp){
     system("clear");
-    hit(blue, tarx, tary, bluescore);
-    display(blue, 0);
+    if(hit(blue, tarx, tary, bluescore)){
+      bluehp--;
+    }
+    printf("[");
+    for(int x = 0; x < 5; x++){
+      printf(" %d,", bluescore[x]);
+    }
+    printf("]\n");
+    display(blue, 1);
     printf("Select your target: ");
     scanf("%d %d", &tarx, &tary);
     
