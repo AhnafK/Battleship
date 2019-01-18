@@ -176,7 +176,6 @@ int initialize(char board[8][8]){
 }
 
 int rinit(char board[8][8]){
-  srandom(time(NULL));
   char* boats[5] = {"Battleship", "Destroyer", "Submarine", "Patrol Boat", "Carrier"};
   int sizes[5] = {4,3,3,2,5};
   for(int s = 0; s < 5; s++){
@@ -190,6 +189,7 @@ int rinit(char board[8][8]){
 }
 
 int main(){
+  srandom(time(0));
   int bluescore[5] = {4,3,3,2,5};
   int  redscore[5] = {4,3,3,2,5};
   int redhp = 17;
@@ -203,6 +203,7 @@ int main(){
   int tarx;
   int tary;
   rinit(blue);
+  rinit(red);
   display(blue, 1);
   system("clear");
   display(blue, 1);
@@ -211,6 +212,21 @@ int main(){
   while(redhp && bluehp){
     system("clear");
     hit(blue, tarx, tary, bluescore,&bluehp);
+    printf("[");
+    for(int x = 0; x < 5; x++){
+      printf(" %d,", redscore[x]);
+    }
+    printf("]\nRedHP: %d\n", redhp);
+    display(red, 1);
+    if(bluehp < 1){
+      printf("Red Wins!");
+      break;
+    }
+    printf("Select your target: ");
+    scanf("%d %d", &tarx, &tary);
+
+    system("clear");
+    hit(red, tarx, tary, redscore,&redhp);
     printf("[");
     for(int x = 0; x < 5; x++){
       printf(" %d,", bluescore[x]);
@@ -223,6 +239,5 @@ int main(){
     }
     printf("Select your target: ");
     scanf("%d %d", &tarx, &tary);
-    
   }
 }
