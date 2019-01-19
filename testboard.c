@@ -171,7 +171,7 @@ int main(){
   int tarx;
   int tary;
   rinit(blue);
-  rinit(red);
+  initialize(red);
   display(blue, 1);
   system("clear");
   display(blue, 0);
