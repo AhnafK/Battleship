@@ -11,38 +11,6 @@ int build(char board[8][8]){
   return 0;
 }
 
-/*scrapped
-int place(char board[8][8], char x, char y, char length, int rot){
-  if(rot == 0){
-    if(y + length > 8){
-      return -1;
-    }
-    for(int l = 0; l < length; l++){
-      if(board[x][y+l]){
-	return -1;
-      }
-    }
-    for(int l = 0; l < length; l++){
-      board[x][y+l] = 1;
-    }
-    return 0;
-  }
-  if(rot == 1){
-    if(x + length > 8){
-      return -1;
-    }
-    for(int l = 0; l < length; l++){
-      if(board[x+l][y]){
-	return -1;
-      }
-    }
-    for(int l = 0; l < length; l++){
-      board[x+l][y] = 1;
-    }
-    return 0;
-  }
-}
-*/
 
 int place(char board[8][8], char x, char y, int boat, int rot){
   int sizes[5] = {4,3,3,2,5};
@@ -206,8 +174,8 @@ int main(){
   rinit(red);
   display(blue, 1);
   system("clear");
-  display(blue, 1);
-  printf("Select your target: ");
+  display(blue, 0);
+  printf("RED Select your target: ");
   scanf("%d %d", &tarx, &tary);
   while(redhp && bluehp){
     system("clear");
@@ -217,7 +185,7 @@ int main(){
       printf(" %d,", redscore[x]);
     }
     printf("]\nRedHP: %d\n", redhp);
-    display(red, 1);
+    display(red, 0);
     if(bluehp < 1){
       printf("Red Wins!");
       break;
@@ -232,12 +200,12 @@ int main(){
       printf(" %d,", bluescore[x]);
     }
     printf("]\nBlueHP: %d\n", bluehp);
-    display(blue, 1);
+    display(blue, 0);
     if(bluehp < 1){
       printf("Red Wins!");
       break;
     }
-    printf("Select your target: ");
+    printf("RED Select your target: ");
     scanf("%d %d", &tarx, &tary);
   }
 }
